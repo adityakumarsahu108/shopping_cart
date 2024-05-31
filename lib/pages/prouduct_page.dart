@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_cart/global_variable.dart';
-import 'package:shopping_cart/product_card.dart';
-import 'package:shopping_cart/product_details.dart';
+import 'package:shopping_cart/widgets/product_card.dart';
+import 'package:shopping_cart/widgets/product_details.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -35,6 +35,7 @@ class _ProductPageState extends State<ProductPage> {
         color: Color.fromRGBO(225, 225, 225, 1),
       ),
     );
+
     return SafeArea(
       child: Column(
         children: [
@@ -98,29 +99,65 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return ProductDetailsPage(
-                          product: product,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 650) {
+                  return GridView.builder(
+                      itemCount: products.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 2,
+                      ),
+                      itemBuilder: ((context, index) {
+                        final product = products[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return ProductDetailsPage(
+                                  product: product,
+                                );
+                              },
+                            ));
+                          },
+                          child: ProductCard(
+                            title: product['title'] as String,
+                            price: product['prices'] as double,
+                            image: product['imageUrl'] as String,
+                            backgroundColor: index.isEven
+                                ? const Color.fromRGBO(216, 240, 253, 1)
+                                : const Color.fromRGBO(255, 225, 226, 226),
+                          ),
                         );
-                      },
-                    ));
-                  },
-                  child: ProductCard(
-                    title: 'hi',
-                    price: 45.25,
-                    image: product['imageUrl'] as String,
-                    backgroundColor: index.isEven
-                        ? const Color.fromRGBO(216, 240, 253, 1)
-                        : const Color.fromRGBO(255, 225, 226, 226),
-                  ),
-                );
+                      }));
+                } else {
+                  return ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailsPage(
+                                product: product,
+                              );
+                            },
+                          ));
+                        },
+                        child: ProductCard(
+                          title: product['title'] as String,
+                          price: product['prices'] as double,
+                          image: product['imageUrl'] as String,
+                          backgroundColor: index.isEven
+                              ? const Color.fromRGBO(216, 240, 253, 1)
+                              : const Color.fromRGBO(255, 225, 226, 226),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),

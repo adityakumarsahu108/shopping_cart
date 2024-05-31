@@ -32,13 +32,3 @@ final products = [
     'imageUrl': 'assets/images/shoe4.png',
   },
 ];
-final cart = [
-  {
-    'id': '3',
-    'title': 'Campus Shoes',
-    'prices': 48.52,
-    'sizes': [8, 9, 11],
-    'company': 'Campus',
-    'imageUrl': 'assets/images/shoe4.png',
-  },
-];

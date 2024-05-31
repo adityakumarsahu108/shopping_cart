@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_cart/cart_page.dart';
-import 'package:shopping_cart/prouduct_page.dart';
+import 'package:shopping_cart/pages/cart_page.dart';
+import 'package:shopping_cart/pages/prouduct_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,8 +16,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentPage],
+      body: IndexedStack(
+        index: currentPage,
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 35,
+        selectedFontSize: 0,
+        unselectedFontSize: 0,
         onTap: (value) {
           setState(() {
             currentPage = value;
