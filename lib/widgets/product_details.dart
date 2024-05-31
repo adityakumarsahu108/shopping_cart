@@ -31,6 +31,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           backgroundColor: Colors.deepPurple[100],
+          duration: const Duration(seconds: 1),
         ),
       );
     } else {
